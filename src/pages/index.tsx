@@ -140,7 +140,7 @@ export default function Home() {
 
           <div className={styles.box1}>  
             <div className={styles.boxTitulo}>
-              <h1>Calculadora Benny's</h1>
+              <h1>Calculadora Bennys</h1>
             </div>
             <div className={styles.boxInputs1}>            
               <FormControl variant='standard' sx={{ m: 1, width: '25ch' }}>
