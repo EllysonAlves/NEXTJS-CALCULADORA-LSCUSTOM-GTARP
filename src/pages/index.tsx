@@ -238,7 +238,7 @@ export default function Home() {
                     value={formData.costumizador}
                     onChange={handleInputChange}
                     id="filled-number"
-                    label="Nome do Vendedor"
+                    label="Nome do Custumizador"
                     name='costumizador'
                     type="text"
                     variant="standard"
