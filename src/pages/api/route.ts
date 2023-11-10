@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [
-                [body.costumizador,`=IFS(${body.tipo}=1800;"S";${body.tipo}=1400;"A";${body.tipo}=1250;"B";${body.tipo}=940;"C";${body.tipo}=720;"D";${body.tipo}=1260;"M")`,body.quantidade,`=IMAGE("${body.imgVeiculo}")`,`=IMAGE("${body.imgOS}")`,`=IMAGE("${body.imgOS}")`,body.valorEmpresa,body.valorMaoDeObra,body.result]
+                [body.costumizador,`=IFS(${body.tipo}=1800;"S";${body.tipo}=1400;"A";${body.tipo}=1250;"B";${body.tipo}=940;"C";${body.tipo}=720;"D";${body.tipo}=1260;"M")`,body.quantidade,`=IMAGE("${body.imgVeiculo}";4;280;423)`,`=IMAGE("${body.imgOS}";4;280;423)`,`=IMAGE("${body.imgComprovante}";4;280;423)`,body.valorEmpresa,body.valorMaoDeObra,body.result]
             ]
         }
         
