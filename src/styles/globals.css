@@ -25,9 +25,9 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: url(../../public/bg.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: url(../../public/bg.jpg) black;
+  background-size: center;
+  background-position: start;
 
 
   display: flex;

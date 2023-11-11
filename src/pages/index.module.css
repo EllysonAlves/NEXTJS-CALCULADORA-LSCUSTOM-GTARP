@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Lobster';
+  src: url('../../public/Lobster-Regular.ttf') format('truetype'); /* Substitua o caminho e o nome do arquivo conforme necessário */
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Lexend';
+  src: url('../../public/LexendDeca.ttf') format('truetype'); /* Substitua o caminho e o nome do arquivo conforme necessário */
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 
 .main{
     width: 100%;
@@ -18,7 +32,7 @@
     align-items:center;
     background-color: white;
     border-radius: 40px;
-    box-shadow: 0px 0px 28px 9px rgba(153,51,153,0.2);
+    box-shadow: 0px 0px 10px 0px rgba(37, 35, 35, 0.904);
     margin-bottom: 30px;
   }
   .main > .box2{
@@ -29,20 +43,20 @@
     align-items:center;
     background-color: white;
     border-radius: 40px;
-    box-shadow: 0px 0px 28px 9px rgba(153,51,153,0.2);
+    box-shadow: 0px 0px 10px 0px rgba(37, 35, 35, 0.904);
   }
   .boxTitulo{
     width: 100%;
     padding: 30px 10px 30px 10px;
-    background-color: rgba(37, 35, 35, 0.904);
+    background-color: #ff4c30;
     border-radius: 40px 40px 0 0;
     margin-bottom: 10px;
   }
   .boxTitulo h1{
     color: white;
     text-align: center;
-    font-size: 25px;
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    font-family: 'Lobster', cursive;
   }
   .boxInputs1{
     width: 100%;
@@ -54,44 +68,61 @@
     padding-left: 49px;
     padding-right: 49px;
   }
+  .boxInputs2 p{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  }
   .boxTotal{
     width: 200px;
-    border: 1px solid rgb(57, 11, 131);
+    height: 160px;
+    border: 1px solid rgba(37, 35, 35, 0.904);
     border-radius: 20px;
     text-align: center;
-    background-color: rgb(217,72,107);
-    box-shadow: 0px 0px 10px 0px rgb(217,72,107);
+    background-color: white;
+    box-shadow: 0px 0px 10px 0px rgba(37, 35, 35, 0.904);
   }
   .boxTotal h1{
-    color:rgb(131, 7, 36);
+    color:white;
+    background-color: #ff4c30;
     font-weight: bold;
     font-size: 18px;
+    border-radius: 15px 15px 0 0;
+    
   }
   .boxTotal h2{
-    color:white;
-    font-size: 15px;
+    color:black;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Lexend', cursive;
   }
   .boxTotal p{
-    color:white;
+    font-size:14px;
+    color:black;
   }
   .boxTotalAprendiz{
     width: 200px;
-    border: 1px solid rgb(57, 11, 131);
+    height: 160px;
+    border: 1px solid rgba(37, 35, 35, 0.904);
     border-radius: 20px;
     text-align: center;
-    background-color: #4c5ca3;
-    box-shadow: 0px 0px 10px 0px #4c5ca3;
+    background-color: white;
+    box-shadow: 0px 0px 10px 0px rgba(37, 35, 35, 0.904);
   }
   .boxTotalAprendiz h1{
-    color:rgb(31, 0, 82);
-    font-size: 17px;
+    color:white;
+    background-color: #ff4c30;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 15px 15px 0 0;
   }
   .boxTotalAprendiz h2{
-    color:white;
-    font-size: 15px;
+    color:black;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Lexend', cursive;
   }
   .boxTotalAprendiz p{
-    color:white
+    font-size:14px;
+    color:black;
   }
   .sectionTotal{
     display: flex;

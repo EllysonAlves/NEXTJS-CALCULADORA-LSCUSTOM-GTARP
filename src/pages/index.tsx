@@ -13,7 +13,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
-import { green,blue } from '@mui/material/colors';
+import { green } from '@mui/material/colors';
+import Divider from '@mui/material/Divider';
 
 
 export default function Home() {
@@ -114,6 +115,7 @@ export default function Home() {
   
     if (!formDataValid) {
       alert('Por favor, preencha todos os campos obrigatórios.');
+      setLoading(false);
       return;
     }
   
@@ -286,7 +288,7 @@ export default function Home() {
 
           <div className={styles.box1}>  
             <div className={styles.boxTitulo}>
-              <h1>Calculadora Bennys</h1>
+              <h1>Calculadora Los Santos Customs  </h1>
             </div>
             <div className={styles.boxInputs1}>            
               <FormControl variant='standard' sx={{ m: 1, width: '25ch' }}>
@@ -331,23 +333,29 @@ export default function Home() {
           <section className={styles.sectionTotal}>
               <div className={styles.boxTotal}>
                 <div>
-                  <h1>MECANICO</h1>
+                  <h1>CUSTOMIZADOR</h1>
                   <h2>VALOR TOTAL</h2>
                 </div> 
                 <div>
-                  <p>{result}</p>
+                  <p>${result}</p>
                 </div>
+                <Divider />
+                <Divider />
+                <Divider />
                 <div>
                   <h2>VALOR NA MAQUINA</h2>
                 </div> 
                 <div>
-                  <p>{valorMaquina}</p>
+                  <p>${valorMaquina}</p>
                 </div>
+                <Divider />
+                <Divider />
+                <Divider />
                 <div>
                   <h2>VALOR NA MÃO</h2>
                 </div> 
                 <div>
-                  <p>{valorMao}</p>
+                  <p>${valorMao}</p>
                 </div>
               </div> 
               <div className={styles.boxTotalAprendiz}>
@@ -356,19 +364,25 @@ export default function Home() {
                   <h2>VALOR TOTAL</h2>
                 </div> 
                 <div>
-                  <p>{result}</p>
+                  <p>${result}</p>
                 </div>
+                <Divider />
+                <Divider />
+                <Divider />
                 <div>
                   <h2>VALOR NA MAQUINA</h2>
                 </div> 
                 <div>
-                  <p>{valorMaquinaAprendiz}</p>
+                  <p>${valorMaquinaAprendiz}</p>
                 </div>
+                <Divider />
+                <Divider />
+                <Divider />
                 <div>
                   <h2>VALOR NA MÃO</h2>
                 </div> 
                 <div>
-                  <p>{valorMaoAprendiz}</p>
+                  <p>${valorMaoAprendiz}</p>
                 </div>
               </div> 
           </section>             
@@ -384,7 +398,7 @@ export default function Home() {
                     value={formData.costumizador}
                     onChange={handleInputChange}
                     id="filled-number"
-                    label="Nome do Custumizador"
+                    label="Nome do Customizador"
                     name='costumizador'
                     type="text"
                     variant="standard"
@@ -426,13 +440,13 @@ export default function Home() {
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ justifyContent: 'center', mb:4 }}>
-                  <Typography sx={{ color: 'black' }}>MECANICO</Typography>
+                  <Typography sx={{ color: 'black' }}>Customizador</Typography>
                   <Switch
                     checked={checked}
                     onChange={handleChange}
                     inputProps={{ 'aria-label': 'controlled' }}
                   />
-                  <Typography sx={{ color: 'black' }}>APRENDIZ</Typography>
+                  <Typography sx={{ color: 'black' }}>Aprendiz</Typography>
                 </Stack>
               </FormControl>
               <input value={formData.result} type="hidden" name="result" id="" />
@@ -440,6 +454,7 @@ export default function Home() {
               <input value={formData.tipo} type="hidden" name="tipo" id="" />
             </div>   
             <Button
+              color="warning"
               variant="outlined"
               sx={buttonSx}
               type="submit"
