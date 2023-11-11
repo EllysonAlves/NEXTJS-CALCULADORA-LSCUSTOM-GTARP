@@ -10,7 +10,7 @@ type SheetForm = {
     imgComprovante: string
     valorEmpresa: number
     valorMaoDeObra: number
-    result: number    
+    result: number   
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

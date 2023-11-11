@@ -8,6 +8,12 @@ import Select from '@mui/material/Select';
 import { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress';
+import { green,blue } from '@mui/material/colors';
 
 
 export default function Home() {
@@ -23,19 +29,37 @@ export default function Home() {
  
   const handleNumero2Change = (e: SelectChangeEvent) => {
     setValue2(Number(e.target.value));
+    updateValores(Number(e.target.value), value1);
   };
-
+  
   const handleNumero1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue1(Number(e.target.value));
+    updateValores(value2, Number(e.target.value));
+  };
+  
+  const updateValores = (tipo: number, quantidade: number) => {
+    const result = tipo * quantidade;
+    const valorMecanico = result * 0.35;
+    const valorAprendiz = result * 0.30;
+    const valorMaquina = result - valorMecanico;
+    const valorMaquinaAprendiz = result - valorAprendiz;
+    const valorMaoAprendiz = result - valorMaquinaAprendiz;
+    const valorMao = result - valorMaquina;
+  
+    setFormData({
+      ...formData,
+      valorEmpresa: valorMaquina,
+      valorMaoDeObra: valorMao,
+    });
   };
 
   const result = value1 * value2;
   const valorMecanico = result * 0.35;
   const valorAprendiz = result * 0.30;
   const valorMaquina = result - valorMecanico;
-  const valorMaquinaAprendiz = result - valorAprendiz;
-  const valorMaoAprendiz = result - valorMaquinaAprendiz;
+  const valorMaquinaAprendiz = result * 0.7; // Aprendiz usa 70% do valor total
   const valorMao = result - valorMaquina;
+  const valorMaoAprendiz = result - valorMaquinaAprendiz;
 
 
   console.log({value1})
@@ -60,14 +84,12 @@ export default function Home() {
     imgVeiculo: '',
     imgOS: '',
     imgComprovante: '',
-    valorEmpresa: null,
-    valorMaoDeObra: null,
+    valorEmpresa: 0,
+    valorMaoDeObra: 0,
     result: 0,
-    
     
   });
 
-  console.log(formData)
 
   const handleText1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVendedor(e.target.value);
@@ -88,11 +110,14 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   
-    // validação dos campos
-    if (!formData.costumizador || !formData.imgComprovante || !formData.imgVeiculo || !formData.imgOS || !formData.valorEmpresa || !formData.valorMaoDeObra) {
+    const formDataValid = formData.costumizador && formData.imgComprovante && formData.imgVeiculo && formData.imgOS && formData.valorEmpresa && formData.valorMaoDeObra && formData.result;
+  
+    if (!formDataValid) {
       alert('Por favor, preencha todos os campos obrigatórios.');
       return;
-    } else {
+    }
+  
+    try {
       const response = await fetch('/api/route', {
         method: 'POST',
         body: JSON.stringify(formData),
@@ -102,21 +127,28 @@ export default function Home() {
       });
   
       if (response.status === 405) {
-        // Tratar o caso em que o método não é permitido
         console.error('Método não permitido. Verifique a configuração do servidor.');
         alert('Erro no servidor. Tente novamente mais tarde.');
+        setError(true);
       } else {
-        // Continuar como antes
         const content = await response.json();
         console.log(content);
-        alert(content.data.tableRange);
         setVendedor('');
         setCliente('');
         setImgVeiculo('');
         setImg('');
+        alert('Pedido registrado com sucesso!!');
       }
+    } catch (error) {
+      console.error('Erro ao enviar o formulário:', error);
+      setError(true);
+    } finally {
+      setSuccess(true);
+      setLoading(false);
     }
   };
+  
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -132,7 +164,121 @@ export default function Home() {
   formData.result = result;
   formData.tipo = value2;
   formData.quantidade = value1;
- 
+
+  const AntSwitch = styled(Switch)(({ theme }) => ({
+        width: 35,
+        height: 17,
+        padding: 0,
+        display: 'flex',
+        '&:active': {
+          '& .MuiSwitch-thumb': {
+            width: 15,
+          },
+          '& .MuiSwitch-switchBase.Mui-checked': {
+            transform: 'translateX(9px)',
+          },
+        },
+        '& .MuiSwitch-switchBase': {
+          padding: 2,
+          '&.Mui-checked': {
+            transform: 'translateX(19px)',
+            color: '#fff',
+            '& + .MuiSwitch-track': {
+              opacity: 1,
+              backgroundColor: theme.palette.mode === 'dark' ? '#177ddc' : '#1890ff',
+            },
+          },
+        },
+        '& .MuiSwitch-thumb': {
+          boxShadow: '0 2px 4px 0 rgb(0 35 11 / 20%)',
+          width: 12,
+          height: 12,
+          borderRadius: 6,
+          transition: theme.transitions.create(['width'], {
+            duration: 200,
+          }),
+        },
+        '& .MuiSwitch-track': {
+          borderRadius: 16 / 2,
+          opacity: 1,
+          backgroundColor:
+            theme.palette.mode === 'dark' ? 'rgba(255,255,255,.35)' : 'rgba(0,0,0,.25)',
+          boxSizing: 'border-box',
+        },
+      }));
+
+      // button loading submit
+
+      const [loading, setLoading] = React.useState(false);
+      const [success, setSuccess] = React.useState(false);
+      const [error, setError] = React.useState(false);
+      const timer = React.useRef<number>();
+
+      const buttonSx = {
+            ...(success && {
+              bgcolor:  green[50],
+              '&:hover': {
+                bgcolor: green[700],
+              },
+            }),
+          };
+
+          React.useEffect(() => {
+            return () => {
+              clearTimeout(timer.current);
+            };
+          }, []);
+
+          const handleButtonClick = (event: React.FormEvent) => {
+            if (!loading) {
+              setSuccess(false);
+              setLoading(true);
+              setError(false);
+          
+              handleSubmit(event); // Chama a submissão do formulário passando o evento
+            }
+          };
+          // termina aqui 
+
+      const [checked, setChecked] = React.useState(false);
+      
+      const [myData, setMyData] = React.useState<number>(0);
+
+      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+      
+        let newValorEmpresa = 0;
+        let newValorMaoDeObra = 0;
+      
+        if (!event.target.checked) {
+          // se for mecânico
+          newValorEmpresa = valorMaquina;
+          newValorMaoDeObra = valorMao;
+          setMyData(1); // Altera myData para 1
+        } else {
+          // se for aprendiz
+          newValorEmpresa = valorMaquinaAprendiz;
+          newValorMaoDeObra = valorMaoAprendiz;
+          setMyData(2); // Altera myData para 2
+        }
+      
+        setFormData({
+          ...formData,
+          valorEmpresa: newValorEmpresa,
+          valorMaoDeObra: newValorMaoDeObra,
+        });
+      
+        console.log(`valor da valorEmpresa é ${newValorEmpresa}`);
+        console.log(`valor da valorMaoDeObra é ${newValorMaoDeObra}`);
+      };
+
+      console.log(`valor da valorEmpresa é ${formData.valorEmpresa}`);
+      console.log(`valor da valorEmpresa é ${formData.valorMaoDeObra}`);
+      console.log(`valorMaquina: ${valorMaquina}`);
+      console.log(`valorMao: ${valorMao}`);
+      console.log(`valorMaquinaAprendiz: ${valorMaquinaAprendiz}`);
+      console.log(`valorMaoAprendiz: ${valorMaoAprendiz}`);
+
   return (
       <main className={styles.main}>
 
@@ -278,35 +424,43 @@ export default function Home() {
                     variant="standard"
                   />
               </FormControl>
-              <FormControl sx={{ m: 1, width: '20ch' }}>
-                <TextField
-                    value={formData.valorEmpresa}
-                    onChange={handleInputChange}
-                    id="filled-number"
-                    label="Valor da maquina"
-                    name='valorEmpresa'
-                    type="number"
-                    variant="standard"
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ justifyContent: 'center', mb:4 }}>
+                  <Typography sx={{ color: 'black' }}>MECANICO</Typography>
+                  <Switch
+                    checked={checked}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'controlled' }}
                   />
-              </FormControl>
-              <FormControl sx={{ m: 1, width: '32ch' }}>
-                <TextField
-                    value={formData.valorMaoDeObra}
-                    onChange={handleInputChange}
-                    id="filled-number"
-                    label="Valor na mão"
-                    name='valorMaoDeObra'
-                    type="number"
-                    variant="standard"
-                  />
+                  <Typography sx={{ color: 'black' }}>APRENDIZ</Typography>
+                </Stack>
               </FormControl>
               <input value={formData.result} type="hidden" name="result" id="" />
               <input value={formData.quantidade} type="hidden" name="quantidade" id="" />
               <input value={formData.tipo} type="hidden" name="tipo" id="" />
-            </div>  
-            <Button sx={{ mt: 4 }} type="submit" variant="outlined">
-                Registrar Pedido
-            </Button>      
+            </div>   
+            <Button
+              variant="outlined"
+              sx={buttonSx}
+              type="submit"
+              disabled={loading}
+              onClick={handleButtonClick}
+            >
+              {loading ? 'Enviando...' : success ? 'Sucesso!' : error ? 'Falha ao Enviar' : 'Registrar Pedido'}
+            </Button>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  color: green[500],
+                  position: 'relative',
+                  bottom: '4%',
+                  right: '0',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}    
         </form>
 
       </main>

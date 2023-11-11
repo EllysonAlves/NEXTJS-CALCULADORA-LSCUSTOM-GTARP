@@ -41,6 +41,8 @@
   .boxTitulo h1{
     color: white;
     text-align: center;
+    font-size: 25px;
+    font-family: 'Courier New', Courier, monospace;
   }
   .boxInputs1{
     width: 100%;
