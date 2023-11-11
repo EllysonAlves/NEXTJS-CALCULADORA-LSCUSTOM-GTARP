@@ -43,8 +43,8 @@ export default function Home() {
     const valorMecanico = result * 0.35;
     const valorAprendiz = result * 0.30;
     const valorMaquina = result - valorMecanico;
-    const valorMaquinaAprendiz = result - valorAprendiz;
-    const valorMaoAprendiz = result - valorMaquinaAprendiz;
+    const valorMaquinaAprendiz = result * 0.7; // 70% do valor total
+    const valorMaoAprendiz = result - valorMaquinaAprendiz; // Valor na mão do Aprendiz
     const valorMao = result - valorMaquina;
   
     setFormData({
@@ -58,7 +58,7 @@ export default function Home() {
   const valorMecanico = result * 0.35;
   const valorAprendiz = result * 0.30;
   const valorMaquina = result - valorMecanico;
-  const valorMaquinaAprendiz = result * 0.7; // Aprendiz usa 70% do valor total
+  const valorMaquinaAprendiz = result - valorAprendiz; // Aprendiz usa 70% do valor total
   const valorMao = result - valorMaquina;
   const valorMaoAprendiz = result - valorMaquinaAprendiz;
 
