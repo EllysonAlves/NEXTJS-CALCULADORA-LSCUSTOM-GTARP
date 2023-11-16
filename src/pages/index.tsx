@@ -118,6 +118,7 @@ export default function Home() {
       setLoading(false);
       return;
     }
+
   
     try {
       const response = await fetch('/api/route', {
@@ -135,17 +136,30 @@ export default function Home() {
       } else {
         const content = await response.json();
         console.log(content);
+        alert('Pedido registrado com sucesso!!');
+
+        setFormData({
+          costumizador: '',
+          tipo: 0,
+          quantidade: 0,
+          imgVeiculo: '',
+          imgOS: '',
+          imgComprovante: '',
+          valorEmpresa: 0,
+          valorMaoDeObra: 0,
+          result: 0,
+        });
         setVendedor('');
         setCliente('');
         setImgVeiculo('');
         setImg('');
-        alert('Pedido registrado com sucesso!!');
+        
       }
     } catch (error) {
       console.error('Erro ao enviar o formulário:', error);
       setError(true);
     } finally {
-      setSuccess(true);
+      setSuccess(false);
       setLoading(false);
     }
   };
