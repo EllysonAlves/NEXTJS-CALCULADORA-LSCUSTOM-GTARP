@@ -11,11 +11,10 @@ import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
+import { alpha,styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
-import { green } from '@mui/material/colors';
 import Divider from '@mui/material/Divider';
-
+import { purple,yellow,green } from '@mui/material/colors';
 
 export default function Home() {
 
@@ -181,47 +180,26 @@ export default function Home() {
   formData.tipo = value2;
   formData.quantidade = value1;
 
-  const AntSwitch = styled(Switch)(({ theme }) => ({
-        width: 35,
-        height: 17,
-        padding: 0,
-        display: 'flex',
-        '&:active': {
-          '& .MuiSwitch-thumb': {
-            width: 15,
-          },
-          '& .MuiSwitch-switchBase.Mui-checked': {
-            transform: 'translateX(9px)',
-          },
-        },
-        '& .MuiSwitch-switchBase': {
-          padding: 2,
-          '&.Mui-checked': {
-            transform: 'translateX(19px)',
-            color: '#fff',
-            '& + .MuiSwitch-track': {
-              opacity: 1,
-              backgroundColor: theme.palette.mode === 'dark' ? '#177ddc' : '#1890ff',
-            },
-          },
-        },
-        '& .MuiSwitch-thumb': {
-          boxShadow: '0 2px 4px 0 rgb(0 35 11 / 20%)',
-          width: 12,
-          height: 12,
-          borderRadius: 6,
-          transition: theme.transitions.create(['width'], {
-            duration: 200,
-          }),
-        },
-        '& .MuiSwitch-track': {
-          borderRadius: 16 / 2,
-          opacity: 1,
-          backgroundColor:
-            theme.palette.mode === 'dark' ? 'rgba(255,255,255,.35)' : 'rgba(0,0,0,.25)',
-          boxSizing: 'border-box',
-        },
-      }));
+  const PinkSwitch = styled(Switch)(({ theme }) => ({
+    '& .MuiSwitch-switchBase': {
+      color: purple[600],
+      '&:hover': {
+        backgroundColor: alpha(purple[800], theme.palette.action.hoverOpacity),
+      },
+    },
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      color: yellow[600],
+      '&:hover': {
+        backgroundColor: alpha(yellow[600], theme.palette.action.hoverOpacity),
+      },
+    },
+    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+      backgroundColor: yellow[600],
+    },
+    '& .MuiSwitch-switchBase + .MuiSwitch-track': {
+      backgroundColor: purple[600],
+    },
+  }));
 
       // button loading submit
 
@@ -455,7 +433,7 @@ export default function Home() {
               <FormControl fullWidth sx={{ m: 1 }}>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ justifyContent: 'center', mb:4 }}>
                   <Typography sx={{ color: 'black' }}>Customizador</Typography>
-                  <Switch
+                  <PinkSwitch
                     checked={checked}
                     onChange={handleChange}
                     inputProps={{ 'aria-label': 'controlled' }}
